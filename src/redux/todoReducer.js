@@ -8,7 +8,6 @@ import {
 
 const initialState = {
   todo: [],
-  todoRef: null,
 };
 
 const todoReducer = (state = initialState, action) => {
@@ -25,23 +24,11 @@ const todoReducer = (state = initialState, action) => {
             isDone: false,
           },
         ],
-        todoref: [
-          ...state.todo,
-          {
-            id: Date.now(),
-            title: action.payload.title,
-            isEdit: true,
-            isDone: false,
-          },
-        ],
       };
     case DELETE_TODO:
       return {
         ...state,
         todo: [...state.todo].filter((item) => item.id !== action.payload.id),
-        todoRef: [...state.todo].filter(
-          (item) => item.id !== action.payload.id
-        ),
       };
     case EDIT_TODO:
       const data = [...state.todo];
@@ -50,7 +37,6 @@ const todoReducer = (state = initialState, action) => {
       return {
         ...state,
         todo: data,
-        todoRef: data,
       };
     case COMPLETE_TODO:
       const dataC = [...state.todo];
@@ -59,17 +45,14 @@ const todoReducer = (state = initialState, action) => {
       return {
         ...state,
         todo: dataC,
-        todoRef: dataC,
       };
     case UPDATE_TODO:
-      console.log(action.payload);
       const dataU = [...state.todo];
       const indexU = dataU.findIndex((item) => item.id === action.payload.id);
       dataU[indexU][action.payload.key] = action.payload.key;
       return {
         ...state,
         todo: dataU,
-        todoRef: dataU,
       };
     default:
       return state;
