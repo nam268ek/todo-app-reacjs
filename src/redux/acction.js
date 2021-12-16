@@ -1,9 +1,9 @@
 import * as actionTypes from "./actionTypes";
 
-export const addTodo = (title) => {
+export const addTodo = (todo) => {
   return {
     type: actionTypes.ADD_TODO,
-    payload: { title },
+    payload: { todo },
   };
 };
 export const deleteTodo = (id) => {
@@ -24,9 +24,9 @@ export const completeTodo = (id) => {
     payload: { id },
   };
 };
-export const updateTodo = (id, key) => {
+export const updateTodo = (id, title) => {
   return {
     type: actionTypes.UPDATE_TODO,
-    payload: { id, key },
+    payload: { id, title },
   };
 };

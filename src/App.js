@@ -49,7 +49,13 @@ function App() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    input.length > 0 && dispatch(addTodo(input));
+    const data = {
+      id: Date.now(),
+      title: input,
+      isEdit: true,
+      isDone: false,
+    };
+    input.length > 0 && dispatch(addTodo(data));
     setInput("");
   };
 
@@ -82,8 +88,8 @@ function App() {
                 <Input
                   ref={inputRef}
                   type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
+                  defaultValue={input}
+                  onBlur={(e) => setInput(e.target.value)}
                 />
                 <Button type="submit">ADD</Button>
               </Div>

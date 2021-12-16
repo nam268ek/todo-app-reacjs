@@ -14,45 +14,41 @@ const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
       return {
-        ...state,
-        todo: [
-          ...state.todo,
-          {
-            id: Date.now(),
-            title: action.payload.title,
-            isEdit: true,
-            isDone: false,
-          },
-        ],
+        todo: [...state.todo, action.payload.todo],
       };
     case DELETE_TODO:
       return {
-        ...state,
-        todo: [...state.todo].filter((item) => item.id !== action.payload.id),
+        todo: state.todo.filter((item) => item.id !== action.payload.id),
       };
     case EDIT_TODO:
-      const data = [...state.todo];
-      const index = data.findIndex((item) => item.id === action.payload.id);
-      data[index].isEdit = !data[index].isEdit;
       return {
-        ...state,
-        todo: data,
+        todo: state.todo.map((item) => {
+          if (item.id === action.payload.id) {
+            return {
+              ...item,
+              isEdit: true,
+            };
+          }
+          return item;
+        }),
       };
     case COMPLETE_TODO:
-      const dataC = [...state.todo];
-      const indexC = dataC.findIndex((item) => item.id === action.payload.id);
-      dataC[indexC].isDone = !dataC[indexC].isDone;
       return {
-        ...state,
-        todo: dataC,
+        todo: state.todo.map((item) => {
+          if (item.id === action.payload.id) {
+            item.isDone = !item.isDone;
+          }
+          return item;
+        }),
       };
     case UPDATE_TODO:
-      const dataU = [...state.todo];
-      const indexU = dataU.findIndex((item) => item.id === action.payload.id);
-      dataU[indexU][action.payload.key] = action.payload.key;
       return {
-        ...state,
-        todo: dataU,
+        todo: state.todo.map((item) => {
+          if (item.id === action.payload.id) {
+            item.title = action.payload.title;
+          }
+          return item;
+        }),
       };
     default:
       return state;
